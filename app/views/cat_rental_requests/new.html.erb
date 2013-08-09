@@ -1,0 +1,18 @@
+<form action="<%= cat_rental_requests_url %>" method="post">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<label for="cat_rental_begin_date">Start Date:</label>
+	<input type="date" id="cat_rental_begin_date" name="cat_rental_request[begin_date]">
+	<br>
+	<label for="cat_rental_end_date">End Date:</label>
+	<input type="date" id="cat_rental_end_date" name="cat_rental_request[end_date]">
+	<br>
+	<label for="cat_rental_cat">Select Cat</label>
+	<select id="cat_rental_cat" name="cat_rental_request[cat_id]">
+		<option></option>
+		<% Cat.all.each do |cat| %>
+			<option value="<%= cat.id %>"> <%= cat.name %> </option>
+		<% end %>
+	</select>
+	<br>
+	<input type="submit" value="Make rental request">
+</form>

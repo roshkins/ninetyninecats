@@ -1,0 +1,50 @@
+
+
+<h1> Here's your cat! </h1>
+
+Name: <%= @cat.name %>
+<br>
+Age: <%= @cat.age %>
+<br>
+Color: <%= @cat.color %>
+<br>
+Sex: <%= @cat.sex if @cat.sex%>
+<br>
+
+<% if !@cat.requests.empty? %>
+<table>
+	<tr>
+		<th>Start Date</th>	<th>End Date</th> <th>Approved</th><th>Declined</th>
+	</tr>
+	<% @cat.requests.order("begin_date, end_date").each do |request| %>
+	<tr>
+		<td><%= request.begin_date %></td> <td><%= request.end_date %></td>
+		<% if request.status == "undecided" && @current_user.cats.include?(@cat) %>
+		<td>
+			<form action="<%= cat_rental_request_url(request) %>" method="post">
+				<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+				<input type="hidden" name="_method" value="put">
+				<input type="hidden" name="cat_rental_request[status]" value="approved">
+				<input type="submit" value="Approve">
+			</form>
+		</td>
+
+		<td>
+			<form action="<%= cat_rental_request_url(request) %>" method="post">
+				<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+				<input type="hidden" name="_method" value="put">
+				<input type="hidden" name="cat_rental_request[status]" value="declined">
+				<input type="submit" value="Decline">
+			</form>
+		</td>
+		<% end %>
+		<% if request.status == "approved" %>
+		<td> Approved! </td> <td> </td>
+		<% elsif request.status == "declined" %>
+		<td></td> <td>Declined :(</td>
+		<% end %>
+	</tr>
+	<% end %>
+
+</table>
+<% end %>

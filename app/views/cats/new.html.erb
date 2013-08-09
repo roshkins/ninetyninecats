@@ -1,0 +1,25 @@
+<form action="<%= cats_url %>" method="post">
+	<h1> Create a cat! </h1>
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<label for="cat_name">Name: </label>
+	<input type="text" id="cat_name" name="cat[name]">
+	<br>
+	<br>
+	<label for="cat_birth_date">Your cats birthdate: </label>
+	<input type="date" id="cat_birth_date" name="cat[birth_date]">
+	<br>
+	<br>
+	<label for="cat_color">Cat color: </label>
+	<select id="cat_color" name="cat[color]">
+		<option>--cat color--</option>
+		<% Cat::CAT_COLORS.each do |color| %>
+		<option> <%= color %></option>
+		<% end %>
+	</select>
+	<br>
+	<br>
+	<label for="cat_sex">Sex: </label>
+	<input type="text" id="cat_sex" name="cat[sex]">
+	<br>
+	<input type="submit" value="Create Cat">
+</form>
